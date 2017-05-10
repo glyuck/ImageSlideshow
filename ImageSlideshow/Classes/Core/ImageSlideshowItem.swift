@@ -28,6 +28,12 @@ open class ImageSlideshowItem: UIScrollView, UIScrollViewDelegate {
     /// If set to true image is initially zoomed in
     open var zoomInInitially = false
 
+    /// Called on scrollViewDidZoom
+    open var didZoom: ((ImageSlideshowItem) -> ())?
+
+    /// Called on scrollViewDidEndZooming
+    open var didEndZooming: ((ImageSlideshowItem) -> ())?
+
     fileprivate var lastFrame = CGRect.zero
     fileprivate var imageReleased = false
     fileprivate var singleTapGestureRecognizer: UITapGestureRecognizer?
@@ -219,6 +225,11 @@ open class ImageSlideshowItem: UIScrollView, UIScrollViewDelegate {
 
     open func scrollViewDidZoom(_ scrollView: UIScrollView) {
         setPictoCenter()
+        didZoom?(self)
+    }
+
+    open func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        didEndZooming?(self)
     }
 
     open func viewForZooming(in scrollView: UIScrollView) -> UIView? {

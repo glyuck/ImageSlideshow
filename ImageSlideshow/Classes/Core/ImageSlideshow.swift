@@ -86,6 +86,20 @@ open class ImageSlideshow: UIView {
     /// Called on scrollViewDidEndDecelerating
     open var didEndDecelerating: (() -> ())?
 
+    /// Called on scrollViewDidZoom
+    open var didZoom: ((ImageSlideshowItem) -> ())? {
+        didSet {
+            slideshowItems.forEach({ $0.didZoom = didZoom })
+        }
+    }
+
+    /// Called on scrollViewDidEndZooming
+    open var didEndZooming: ((ImageSlideshowItem) -> ())? {
+        didSet {
+            slideshowItems.forEach({ $0.didEndZooming = didEndZooming })
+        }
+    }
+
     /// Currenlty displayed slideshow item
     open var currentSlideshowItem: ImageSlideshowItem? {
         if slideshowItems.count > scrollViewPage {
@@ -247,6 +261,8 @@ open class ImageSlideshow: UIView {
         for image in scrollViewImages {
             let item = ImageSlideshowItem(image: image, zoomEnabled: self.zoomEnabled, activityIndicator: self.activityIndicator?.create())
             item.imageView.contentMode = self.contentScaleMode
+            item.didZoom = didZoom
+            item.didEndZooming = didEndZooming
             slideshowItems.append(item)
             scrollView.addSubview(item)
             i += 1
