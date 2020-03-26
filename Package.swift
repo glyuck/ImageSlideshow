@@ -30,8 +30,6 @@ let package = Package(
                 "Classes/Core/UIImage+AspectFit.swift",
                 "Classes/Core/UIImageView+Tools.swift",
                 "Classes/Core/ZoomAnimatedTransitioning.swift",
-                "Assets/ic_cross_white@2x.png",
-                "Assets/ic_cross_white@3x.png",
             ]),
     ],
     swiftLanguageVersions: [.v4, .v4_2, .v5]
